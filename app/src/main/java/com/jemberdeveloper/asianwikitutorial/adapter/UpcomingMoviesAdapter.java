@@ -1,6 +1,7 @@
 package com.jemberdeveloper.asianwikitutorial.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jemberdeveloper.asianwikitutorial.R;
+import com.jemberdeveloper.asianwikitutorial.activity.DetailActivity;
 import com.jemberdeveloper.asianwikitutorial.model.UpcomingModel;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -40,7 +42,17 @@ public class UpcomingMoviesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             title = itemView.findViewById(R.id.tv_title);
         }
 
-        void setData(UpcomingModel data) {
+        void setData(final UpcomingModel data) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, DetailActivity.class);
+                    i.putExtra("thumbnail",data.getThumbnail());
+                    i.putExtra("title", data.getTitle());
+                    i.putExtra("url", data.getLink());
+                    context.startActivity(i);
+                }
+            });
             title.setText(data.getTitle());
             Picasso.get()
                     .load(data.getThumbnail())
