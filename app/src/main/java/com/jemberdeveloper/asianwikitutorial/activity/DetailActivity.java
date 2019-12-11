@@ -50,6 +50,7 @@ public class DetailActivity extends AppCompatActivity {
     private List<String> notes = new ArrayList<>();
     private ArrayList<String> trailerVidUrl = new ArrayList<>();
     private ArrayList<String> trailerThumUrl = new ArrayList<>();
+    private ArrayList<String> trailerTitle = new ArrayList<>();
     private List<CastModel> castModels = new ArrayList<>();
     private String trailerUrl, synopsis;
     private boolean castWithImage = false;
@@ -283,8 +284,10 @@ public class DetailActivity extends AppCompatActivity {
                     Element element = items.get(i);
                     String urlVideo = element.select("media|content").attr("url");
                     String urlThum = element.select("media|thumbnail").attr("url");
+                    String title = element.select("title").text();
                     trailerVidUrl.add(urlVideo);
                     trailerThumUrl.add(urlThum);
+                    trailerTitle.add(title);
                 }
 
                 Picasso.get()
@@ -311,6 +314,7 @@ public class DetailActivity extends AppCompatActivity {
                             Intent i = new Intent(DetailActivity.this,TrailerActivity.class);
                             i.putStringArrayListExtra("urlVideo", trailerVidUrl);
                             i.putStringArrayListExtra("urlThumb", trailerThumUrl);
+                            i.putStringArrayListExtra("title", trailerTitle);
                             startActivity(i);
                         } else {
                             Toast.makeText(DetailActivity.this, "Trailer not available", Toast.LENGTH_SHORT).show();
